@@ -31,13 +31,14 @@ def maxmin_norm(data):
 def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=1, name_tag="", resize_f=1):
     # shape supposed to be 512*512*284 by default
     assert dataA.shape == dataB.shape, ("DataA should share the same shape with DataB.")
-    path2save = "./pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/train/"
+    path2save = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/train/"
     h, w, c = dataA.shape
     h = h*resize_f
     w = w*resize_f
     img = np.zeros((n_slice, h, w*2))
         
-list_ori = glob.glob("./data/"+name_dataset+"/pure/*.nii")
+
+list_ori = glob.glob("../data/"+name_dataset+"/pure/*.nii")
 list_ori.sort()
 for path_ori in list_ori:
     print("TrainA:")
@@ -46,7 +47,7 @@ for path_ori in list_ori:
     print(filename_ori)
     data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
     
-    list_sim = glob.glob("./data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
+    list_sim = glob.glob("../data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
     list_sim.sort()
     
     for path_sim in list_sim:
