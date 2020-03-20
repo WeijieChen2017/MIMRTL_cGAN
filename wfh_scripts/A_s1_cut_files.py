@@ -59,12 +59,12 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
         if remove_background:
             pure_min = np.mean(pure_cube)
             blur_min = np.mean(blur_cube)
-        while pure_min <= 1e-6 or blur_min <= 1e-6:
-            Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
-            pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
-            blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
-            pure_min = np.mean(pure_cube)
-            blur_min = np.mean(blur_cube)
+            while pure_min <= 1e-6 or blur_min <= 1e-6:
+                Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
+                pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
+                blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
+                pure_min = np.mean(pure_cube)
+                blur_min = np.mean(blur_cube)
 
         output_cube[0, :, :, :cube_size] = pure_cube
         output_cube[0, :, :, cube_size:] = blur_cube
