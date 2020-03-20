@@ -42,9 +42,9 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
     blur_cube = np.zeros((cube_size, cube_size, cube_size))
 
     for idx in range(num_sample):
-    	Bx = random.randint(0, x-1)
-    	By = random.randint(0, y-1)
-    	Bz = random.randint(0, z-1)
+        Bx = random.randint(0, x-1)
+        By = random.randint(0, y-1)
+        Bz = random.randint(0, z-1)
         Ex, Ey, Ez = Bx + cube_size, By + cube_size, Bz + cube_size         
         pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
         blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
