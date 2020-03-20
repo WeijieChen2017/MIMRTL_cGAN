@@ -8,7 +8,7 @@ import random
 # create directory
 name_dataset = "3dunet"
 
-for folder_name in ["trainA", "trainB", "testA", "testB"]:
+for folder_name in ["trainA", "trainB", "testA", "testB", "train", "test"]:
     path = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/"+folder_name+"/"
     if not os.path.exists(path):
         os.makedirs(path)
@@ -30,7 +30,7 @@ def maxmin_norm(data):
     return data
 
 def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag="",
-								num_sample=1, remove_background=True, cube_size=64):
+								num_sample=1000, remove_background=True, cube_size=64):
     # shape supposed to be 512*512*284 by default
     assert dataA.shape == dataB.shape, ("DataA should share the same shape with DataB.")
     path2save = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/train/"
@@ -48,8 +48,11 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
         Ex, Ey, Ez = Bx + cube_size, By + cube_size, Bz + cube_size         
         pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
         blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
+        output_cube[0, :, :, :cube_size] = pure_cube
+        output_cube[0, :, :, cube_size:] = blur_cube
         save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
-        print(path2save+save_name)
+        np.save(path2save+save_name, output_cube)
+        print(idx, path2save+save_name)
 
 
 
