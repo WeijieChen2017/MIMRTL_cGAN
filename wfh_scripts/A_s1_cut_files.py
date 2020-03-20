@@ -29,8 +29,18 @@ def maxmin_norm(data):
     data = (data - MIN)/(MAX-MIN)
     return data
 
+def GenerateLegalCoordinates(x,y,z, cube_size):
+    Bx = random.randint(0, x-cube_size-1)
+    Ex = Bx + cube_size
+    By = random.randint(0, y-cube_size-1)
+    Ey = By + cube_size
+    Bz = random.randint(0, z-cube_size-1)
+    Ez = Bz + cube_size   
+    return Bx, Ex, By, Ey, Bz, Ez
+
+
 def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag="",
-								num_sample=1000, remove_background=True, cube_size=64):
+								num_sample=1000, remove_background=False, cube_size=64):
     # shape supposed to be 512*512*284 by default
     assert dataA.shape == dataB.shape, ("DataA should share the same shape with DataB.")
     path2save = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/train/"
@@ -42,12 +52,20 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
     blur_cube = np.zeros((cube_size, cube_size, cube_size))
 
     for idx in range(num_sample):
-        Bx = random.randint(0, x-1)
-        By = random.randint(0, y-1)
-        Bz = random.randint(0, z-1)
-        Ex, Ey, Ez = Bx + cube_size, By + cube_size, Bz + cube_size         
+        Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
         pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
         blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
+
+        if remove_background:
+            pure_min = np.mean(pure_cube)
+            blur_min = np.mean(blur_cube)
+        while pure_min <= 1e-6 or blur_min <= 1e-6:
+            Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
+            pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
+            blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
+            pure_min = np.mean(pure_cube)
+            blur_min = np.mean(blur_cube)
+
         output_cube[0, :, :, :cube_size] = pure_cube
         output_cube[0, :, :, cube_size:] = blur_cube
         save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
