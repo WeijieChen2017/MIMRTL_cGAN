@@ -59,16 +59,17 @@ class Aligned3dDataset(BaseDataset):
         AB_path = self.AB_paths[index]
         AB = np.load(AB_path)
         # split AB
-        w, h, w = AB.shape
-        w = w // 2
-        data_A = AB[:, :, :w]
-        data_B = AB[:, :, w:]
+        cube_size = AB.shape[0]
+        data_A = AB[:, :, :cube_size]
+        data_B = AB[:, :, cube_size:]
             
         # A = torch.from_numpy(data_A).float().unsqueeze(0)
         # B = torch.from_numpy(data_B).float().unsqueeze(0)
 
-        A = torch.from_numpy(data_A).float()
-        B = torch.from_numpy(data_B).float()
+        A = torch.from_numpy(data_A).float().unsqueeze(0)
+        B = torch.from_numpy(data_B).float().unsqueeze(0)
+
+        print(A.size())
         # print(A.size(), B.size())
         # normalization has been done during creating dataset
 
