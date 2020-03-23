@@ -64,6 +64,8 @@ class Aligned3dDataset(BaseDataset):
         data_A = AB[:, :, :, :cube_size]
         data_B = AB[:, :, :, cube_size:]
             
+        print(data_A.shape)
+        print(data_B.shape)
         # A = torch.from_numpy(data_A).float().unsqueeze(0)
         # B = torch.from_numpy(data_B).float().unsqueeze(0)
 
