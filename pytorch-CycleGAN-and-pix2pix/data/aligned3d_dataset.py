@@ -69,8 +69,8 @@ class Aligned3dDataset(BaseDataset):
         # A = torch.from_numpy(data_A).float().unsqueeze(0)
         # B = torch.from_numpy(data_B).float().unsqueeze(0)
 
-        A = torch.from_numpy(data_A).float().unsqueeze(0)
-        B = torch.from_numpy(data_B).float().unsqueeze(0)
+        A = torch.from_numpy(data_A).float()
+        B = torch.from_numpy(data_B).float()
 
         print(A.size())
         # print(A.size(), B.size())
