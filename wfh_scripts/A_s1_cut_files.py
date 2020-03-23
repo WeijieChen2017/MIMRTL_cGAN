@@ -34,7 +34,7 @@ def GenerateLegalCoordinates(x,y,z, cube_size):
     Ex = Bx + cube_size
     By = random.randint(0, y-cube_size-1)
     Ey = By + cube_size
-    Bz = random.randint(0, z-cube_size-1)
+    Bz = random.randint(1, z-cube_size-2)
     Ez = Bz + cube_size   
     return Bx, Ex, By, Ey, Bz, Ez
 
@@ -47,7 +47,7 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
     x, y, z = dataA.shape
 
     # N, C, D, H, W
-    output_cube = np.zeros((1, cube_size, cube_size, cube_size*2))
+    output_cube = np.zeros((3, cube_size, cube_size, cube_size*2))
     pure_cube = np.zeros((cube_size, cube_size, cube_size))
     blur_cube = np.zeros((cube_size, cube_size, cube_size))
 
@@ -66,8 +66,16 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
                 pure_min = np.mean(pure_cube)
                 blur_min = np.mean(blur_cube)
 
-        output_cube[0, :, :, :cube_size] = pure_cube
-        output_cube[0, :, :, cube_size:] = blur_cube
+        output_cube[0, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz-1:Ez-1]
+        output_cube[0, :, :, cube_size:] = dataB[Bx:Ex, By:Ey, Bz-1:Ez-1]
+
+        output_cube[1, :, :, :cube_size] = pure_cube
+        output_cube[1, :, :, cube_size:] = blur_cube
+
+        output_cube[2, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz+1:Ez+1]
+        output_cube[2, :, :, cube_size:] = dataB[Bx:Ex, By:Ey, Bz+1:Ez+1]
+
+
         save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
         np.save(path2save+save_name, output_cube)
         print(idx, path2save+save_name)
