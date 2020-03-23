@@ -61,14 +61,14 @@ class Aligned3dDataset(BaseDataset):
         print(AB.shape)
         # split AB
         cube_size = AB.shape[0]
-        data_A = AB[:, :, :cube_size]
-        data_B = AB[:, :, cube_size:]
+        data_A = AB[:, :, :, :cube_size]
+        data_B = AB[:, :, :, cube_size:]
             
         # A = torch.from_numpy(data_A).float().unsqueeze(0)
         # B = torch.from_numpy(data_B).float().unsqueeze(0)
 
-        A = torch.from_numpy(data_A).float().unsqueeze(0)
-        B = torch.from_numpy(data_B).float().unsqueeze(0)
+        A = torch.from_numpy(data_A).float()
+        B = torch.from_numpy(data_B).float()
 
         print(A.size())
         # print(A.size(), B.size())
