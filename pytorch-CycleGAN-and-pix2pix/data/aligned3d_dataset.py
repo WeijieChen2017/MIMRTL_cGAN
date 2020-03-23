@@ -60,7 +60,7 @@ class Aligned3dDataset(BaseDataset):
         AB = np.load(AB_path)
         print(AB.shape)
         # split AB
-        cube_size = AB.shape[0]
+        cube_size = AB.shape[1]
         data_A = AB[:, :, :, :cube_size]
         data_B = AB[:, :, :, cube_size:]
             
