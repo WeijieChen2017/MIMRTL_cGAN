@@ -40,5 +40,6 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--n_epochs_update_G', type=int, default=1, help='number of epochs with updating generators')
         parser.add_argument('--lr_D', type=float, default=0.0001, help='initial learning rate for adam in discriminators')
         parser.add_argument('--lr_G', type=float, default=0.0001, help='initial learning rate for adam in generators')
+        parser.add_argument('--lr', type=float, default=0.0001, help='initial learning rate')
         self.isTrain = True
         return parser
