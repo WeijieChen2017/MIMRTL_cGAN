@@ -31,7 +31,7 @@ for path_ori in list_ori:
     nii_file = nib.load(path_ori)
     nii_data = nii_file.get_fdata()
     
-    list_cubes = glob.glob("../pytorch-CycleGAN-and-pix2pix/results/"+name_dataset+"/test_latest/images/*_fake.npy")
+    list_cubes = glob.glob("../pytorch-CycleGAN-and-pix2pix/results/"+name_dataset+"/test_latest/images/*_fake*.npy")
     list_cubes.sort()
     num_cubes = len(list_cubes)
     fake_value = np.zeros((nii_data.shape[0], nii_data.shape[1], nii_data.shape[2]))
