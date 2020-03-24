@@ -56,8 +56,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
 
                 Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
                 Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
-                Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
-                Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+                Bx2, By2, Bz2 = Bx1+1, By1+1, Bz1+1
+                Ex2, Ey2, Ez2 = Ex1+1, Ey1+1, Ez1+1
 
                 for coordinates in [Bz0, Ez0, Bz2, Ez2]:
                     if coordinates < 0:
@@ -83,8 +83,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
 
             Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
             Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
-            Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
-            Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+            Bx2, By2, Bz2 = Bx1+1, By1+1, Bz1+1
+            Ex2, Ey2, Ez2 = Ex1+1, Ey1+1, Ez1+1
 
             for coordinates in [Bz0, Ez0, Bz2, Ez2]:
                 if coordinates < 0:
