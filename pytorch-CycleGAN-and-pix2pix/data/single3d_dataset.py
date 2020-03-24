@@ -35,7 +35,7 @@ class Single3DDataset(BaseDataset):
         A_path = self.A_paths[index]
 
         data_A = numpy.load(A_path)
-        print(data_A.shape)
+        # print(data_A.shape)
         A = torch.from_numpy(data_A).float()
 
         # A_img = Image.open(A_path).convert('RGB')
