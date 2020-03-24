@@ -41,7 +41,7 @@ for path_ori in list_ori:
         data_cube = np.load(path_cube)    
         start_x, start_y, start_z = get_cube_idx(path_cube, edge_length)
         print(start_x, start_y, start_z, np.mean(data_cube))
-        fake_value[start_x:start_x+edge_length, start_y:start_y+edge_length, start_z:start_z+edge_length] += data_cube
+        fake_value[start_x:start_x+edge_length, start_y:start_y+edge_length, start_z:start_z+edge_length] += data_cube[1, :, :, :]
         fake_count[start_x:start_x+edge_length, start_y:start_y+edge_length, start_z:start_z+edge_length] += count_cube
         
     # assert (not 0 in fake_count), ("Each pixel should be generated at least once.")
