@@ -23,7 +23,7 @@ date_tag = "Mar24"
 edge_length = 64
 count_cube = np.ones((edge_length, edge_length, edge_length))
 
-list_ori = glob.glob("./data/"+name_dataset+"/test/*.nii")
+list_ori = glob.glob("../data/"+name_dataset+"/test/*.nii")
 list_ori.sort()
 for path_ori in list_ori:
     print(path_ori)
@@ -31,7 +31,7 @@ for path_ori in list_ori:
     nii_file = nib.load(path_ori)
     nii_data = nii_file.get_fdata()
     
-    list_cubes = glob.glob("./pytorch-CycleGAN-and-pix2pix/results/"+name_dataset+"/test_latest/images/*_fake.npy")
+    list_cubes = glob.glob("../pytorch-CycleGAN-and-pix2pix/results/"+name_dataset+"/test_latest/images/*_fake.npy")
     list_cubes.sort()
     num_cubes = len(list_cubes)
     fake_value = np.zeros((nii_data.shape[0], nii_data.shape[1], nii_data.shape[2]))
@@ -49,6 +49,6 @@ for path_ori in list_ori:
     pred_fake = np.divide(fake_value, fake_count)
     factor_f = np.sum(nii_file.get_data())/np.sum(pred_fake)
     file_fake = nib.Nifti1Image(pred_fake*factor_f, nii_file.affine, nii_file.header)
-    nib.save(file_fake, "./"+nii_name+"_fake_value_"+date_tag+".nii")
+    nib.save(file_fake, "../"+nii_name+"_fake_value_"+date_tag+".nii")
     file_fake = nib.Nifti1Image(fake_count, nii_file.affine, nii_file.header)
-    nib.save(file_fake, "./"+nii_name+"_fake_count_"+date_tag+".nii")
+    nib.save(file_fake, "../"+nii_name+"_fake_count_"+date_tag+".nii")
