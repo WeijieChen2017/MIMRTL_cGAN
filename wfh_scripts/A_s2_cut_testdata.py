@@ -59,17 +59,19 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 Bx2, By2, Bz2 = Bx1+1, By1+1, Bz1+1
                 Ex2, Ey2, Ez2 = Ex1+1, Ey1+1, Ez1+1
 
-                print(Bx1, Ex1, By1, Ey1, Bz1, Ez1)
+                
 
                 for coordinates in [Bz0, Ez0, Bz2, Ez2]:
                     if coordinates < 0:
                         coordinates = 0
                     if coordinates > z:
                         coordinates = z
-                
-                output_cube[:, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
-                output_cube[:, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
-                output_cube[:, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
+
+                print(Bx0, Ex0, By0, Ey0, Bz0, Ez0)
+
+                output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
+                output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
+                output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
 
                 cube_mean = np.mean(output_cube)
                 pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
@@ -94,9 +96,9 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 if coordinates > z:
                     coordinates = z
             
-            output_cube[:, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
-            output_cube[:, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
-            output_cube[:, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
+            output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
+            output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
+            output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
 
             cube_mean = np.mean(output_cube)
             pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
