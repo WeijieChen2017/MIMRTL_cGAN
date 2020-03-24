@@ -51,58 +51,34 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
     pure_cube = np.zeros((cube_size, cube_size, cube_size))
     blur_cube = np.zeros((cube_size, cube_size, cube_size))
 
-    for idx_x in range((x-cube_size)//step_size+1):
-        for idx_y in range((y-cube_size)//step_size+1):
-            for idx_z in range((z-cube_size)//step_size+1):
-                Bx1, By1, Bz1 = idx_x*step_size, idx_y*step_size, idx_z*step_size
-                Ex1, Ey1, Ez1 = Bx1+cube_size, By1+cube_size, Bz1+cube_size         
+    for idx in range(num_sample):
+        Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
+        pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
+        blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
 
-                Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
-                Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
-                Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
-                Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+        if remove_background:
+            pure_min = np.mean(pure_cube)
+            blur_min = np.mean(blur_cube)
+            while pure_min <= 1e-6 or blur_min <= 1e-6:
+                Bx, Ex, By, Ey, Bz, Ez = GenerateLegalCoordinates(x,y,z, cube_size)
+                pure_cube = dataA[Bx:Ex, By:Ey, Bz:Ez]
+                blur_cube = dataB[Bx:Ex, By:Ey, Bz:Ez]
+                pure_min = np.mean(pure_cube)
+                blur_min = np.mean(blur_cube)
 
-                for coordinates in [Bz0, Ez0, Bz2, Ez2]:
-                    if coordinates < 0:
-                        coordinates = 0
-                    if coordinates > z:
-                        coordinates = z
-                
-                output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
-                output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
-                output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
+        output_cube[0, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz-1:Ez-1]
+        output_cube[0, :, :, cube_size:] = dataB[Bx:Ex, By:Ey, Bz-1:Ez-1]
 
-                cube_mean = np.mean(output_cube)
-                pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
-                np.save(pure_name, output_cube)
-                print(idx_x, idx_y, idx_z, cube_mean)
-     
-    # extra patches for z-axis
-    for idx_x in range((pure_data.shape[0]-cube_size)//step_size+1):
-        for idx_y in range((pure_data.shape[1]-cube_size)//step_size+1):
-            Bz1 = 220
-            Bx1, By1 = idx_x*step_size, idx_y*step_size
-            Ex1, Ey1, Ez1 = Bx1+cube_size, By1+cube_size, Bz1+cube_size         
+        output_cube[1, :, :, :cube_size] = pure_cube
+        output_cube[1, :, :, cube_size:] = blur_cube
 
-            Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
-            Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
-            Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
-            Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+        output_cube[2, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz+1:Ez+1]
+        output_cube[2, :, :, cube_size:] = dataB[Bx:Ex, By:Ey, Bz+1:Ez+1]
 
-            for coordinates in [Bz0, Ez0, Bz2, Ez2]:
-                if coordinates < 0:
-                    coordinates = 0
-                if coordinates > z:
-                    coordinates = z
-            
-            output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
-            output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
-            output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
 
-            cube_mean = np.mean(output_cube)
-            pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
-            np.save(pure_name, output_cube)
-            print(idx_x, idx_y, idx_z, cube_mean)
+        save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
+        np.save(path2save+save_name, output_cube)
+        print(idx, path2save+save_name)
 
 
 

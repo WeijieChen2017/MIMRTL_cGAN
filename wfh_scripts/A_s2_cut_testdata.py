@@ -47,38 +47,59 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
 
     # N, C, D, H, W
     output_cube = np.zeros((3, cube_size, cube_size, cube_size))
-    pure_cube = np.zeros((cube_size, cube_size, cube_size))
 
     for idx_x in range((x-cube_size)//step_size+1):
         for idx_y in range((y-cube_size)//step_size+1):
             for idx_z in range((z-cube_size)//step_size+1):
-                Bx, By, Bz = idx_x*step_size, idx_y*step_size, idx_z*step_size
-                Ex, Ey, Ez = Bx + cube_size, By + cube_size, Bz + cube_size         
-                pure_cube = pure_data[Bx:Ex, By:Ey, Bz:Ez]
-                cube_mean = np.mean(pure_cube)
+                Bx1, By1, Bz1 = idx_x*step_size, idx_y*step_size, idx_z*step_size
+                Ex1, Ey1, Ez1 = Bx1+cube_size, By1+cube_size, Bz1+cube_size         
+
+                Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
+                Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
+                Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
+                Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+
+                for coordinates in [Bz0, Ez0, Bz2, Ez2]:
+                    if coordinates < 0:
+                        coordinates = 0
+                    if coordinates > z:
+                        coordinates = z
+                
+                output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
+                output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
+                output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
+
+                cube_mean = np.mean(output_cube)
                 pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
-                np.save(pure_name, pure_cube)
+                np.save(pure_name, output_cube)
                 print(idx_x, idx_y, idx_z, cube_mean)
      
     # extra patches for z-axis
-    for idx_x in range((x-cube_size)//step_size+1):
-        for idx_y in range((y-cube_size)//step_size+1):
-            Bz = 220
-            Bx, By = idx_x*step_size, idx_y*step_size
-            Ex, Ey, Ez = Bx + cube_size, By + cube_size, Bz + cube_size         
-            pure_cube = pure_data[Bx:Ex, By:Ey, Bz:Ez]
-            cube_mean = np.mean(pure_cube)
+    for idx_x in range((pure_data.shape[0]-cube_size)//step_size+1):
+        for idx_y in range((pure_data.shape[1]-cube_size)//step_size+1):
+            Bz1 = 220
+            Bx1, By1 = idx_x*step_size, idx_y*step_size
+            Ex1, Ey1, Ez1 = Bx1+cube_size, By1+cube_size, Bz1+cube_size         
+
+            Bx0, By0, Bz0 = Bx1-1, By1-1, Bz1-1
+            Ex0, Ey0, Ez0 = Ex1-1, Ey1-1, Ez1-1
+            Bx2, By2, Bz2 = Bx2+1, By2+1, Bz2+1
+            Ex2, Ey2, Ez2 = Ex2+1, Ey2+1, Ez2+1
+
+            for coordinates in [Bz0, Ez0, Bz2, Ez2]:
+                if coordinates < 0:
+                    coordinates = 0
+                if coordinates > z:
+                    coordinates = z
+            
+            output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
+            output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
+            output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
+
+            cube_mean = np.mean(output_cube)
             pure_name = pure_save_path+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
-            np.save(pure_name, pure_cube)
-            print(idx_x, idx_y, cube_mean)
-
-        output_cube[0, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz-1:Ez-1]
-        output_cube[1, :, :, :cube_size] = pure_cube
-        output_cube[2, :, :, :cube_size] = dataA[Bx:Ex, By:Ey, Bz+1:Ez+1]
-
-        save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
-        np.save(path2save+save_name, output_cube)
-        print(idx, path2save+save_name)
+            np.save(pure_name, output_cube)
+            print(idx_x, idx_y, idx_z, cube_mean)
 
 list_ori = glob.glob("../data/"+name_dataset+"/pure/*.nii")
 list_ori.sort()
