@@ -59,6 +59,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 Bx2, By2, Bz2 = Bx1+1, By1+1, Bz1+1
                 Ex2, Ey2, Ez2 = Ex1+1, Ey1+1, Ez1+1
 
+                print(Bx1, Ex1, By1, Ey1, Bz1, Ez1)
+
                 for coordinates in [Bz0, Ez0, Bz2, Ez2]:
                     if coordinates < 0:
                         coordinates = 0
