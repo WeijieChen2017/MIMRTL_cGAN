@@ -59,11 +59,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 Bx2, By2, Bz2 = Bx1, By1, Bz1+1
                 Ex2, Ey2, Ez2 = Ex1, Ey1, Ez1+1
 
-                for coordinates in [Bz0, Ez0, Bz2, Ez2]:
-                    if coordinates < 0:
-                        coordinates = 0
-                    if coordinates > z:
-                        coordinates = z
+                Bz0 = 0 if Bz0 < 0
+                Ez2 = z if Ez2 > z
 
                 output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
                 output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
@@ -86,11 +83,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
             Bx2, By2, Bz2 = Bx1, By1, Bz1+1
             Ex2, Ey2, Ez2 = Ex1, Ey1, Ez1+1
 
-            for coordinates in [Bz0, Ez0, Bz2, Ez2]:
-                if coordinates < 0:
-                    coordinates = 0
-                if coordinates > z:
-                    coordinates = z
+            Bz0 = 0 if Bz0 < 0
+            Ez2 = z if Ez2 > z
             
             output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
             output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
