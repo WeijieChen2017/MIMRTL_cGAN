@@ -74,8 +74,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 print(idx_x, idx_y, idx_z, cube_mean)
      
     # extra patches for z-axis
-    for idx_x in range((pure_data.shape[0]-cube_size)//step_size+1):
-        for idx_y in range((pure_data.shape[1]-cube_size)//step_size+1):
+    for idx_x in range((x-cube_size)//step_size+1):
+        for idx_y in range((y-cube_size)//step_size+1):
             Bz1 = 220
             Bx1, By1 = idx_x*step_size, idx_y*step_size
             Ex1, Ey1, Ez1 = Bx1+cube_size, By1+cube_size, Bz1+cube_size         
