@@ -59,12 +59,10 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 Bx2, By2, Bz2 = Bx1, By1, Bz1+1
                 Ex2, Ey2, Ez2 = Ex1, Ey1, Ez1+1
 
-                Bz0 = 0 if Bz0 < 0 else Bz0
                 Ez0 = Ez0+1 if Bz0 <0 else Ez0
+                Bz0 = 0 if Bz0 < 0 else Bz0
                 Bz2 = Bz2-1 if Ez2 >z else Bz2
                 Ez2 = z if Ez2 > z else Ez2
-
-                print(Bz0, Ez0)
 
                 output_cube[0, :, :, :] = dataA[Bx0:Ex0, By0:Ey0, Bz0:Ez0]
                 output_cube[1, :, :, :] = dataA[Bx1:Ex1, By1:Ey1, Bz1:Ez1]
@@ -87,8 +85,8 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
             Bx2, By2, Bz2 = Bx1, By1, Bz1+1
             Ex2, Ey2, Ez2 = Ex1, Ey1, Ez1+1
 
-            Bz0 = 0 if Bz0 < 0 else Bz0
             Ez0 = Ez0+1 if Bz0 <0 else Ez0
+            Bz0 = 0 if Bz0 < 0 else Bz0
             Bz2 = Bz2-1 if Ez2 >z else Bz2
             Ez2 = z if Ez2 > z else Ez2
             
