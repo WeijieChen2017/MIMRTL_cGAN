@@ -44,7 +44,7 @@ for path_ori in list_ori:
         fake_value[start_x:start_x+edge_length, start_y:start_y+edge_length, start_z:start_z+edge_length] += data_cube
         fake_count[start_x:start_x+edge_length, start_y:start_y+edge_length, start_z:start_z+edge_length] += count_cube
         
-    assert (not 0 in fake_count), ("Each pixel should be generated at least once.")
+    # assert (not 0 in fake_count), ("Each pixel should be generated at least once.")
     
     pred_fake = np.divide(fake_value, fake_count)
     factor_f = np.sum(nii_file.get_data())/np.sum(pred_fake)
