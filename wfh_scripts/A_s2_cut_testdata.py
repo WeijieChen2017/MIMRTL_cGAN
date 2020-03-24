@@ -69,7 +69,7 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
                 output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
 
                 cube_mean = np.mean(output_cube)
-                save_name = path2save+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
+                save_name = path2save+"X"+str(Bx1)+"Y"+str(By1)+"Z"+str(Bz1)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
                 np.save(save_name, output_cube)
                 print(idx_x, idx_y, idx_z, cube_mean)
      
@@ -95,7 +95,7 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
             output_cube[2, :, :, :] = dataA[Bx2:Ex2, By2:Ey2, Bz2:Ez2]
 
             cube_mean = np.mean(output_cube)
-            save_name = path2save+"X"+str(Bx)+"Y"+str(By)+"Z"+str(Bz)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
+            save_name = path2save+"X"+str(Bx1)+"Y"+str(By1)+"Z"+str(Bz1)+"_C"+str(cube_size)+"S"+str(step_size)+"_pure.npy"
             np.save(save_name, output_cube)
             print(idx_x, idx_y, cube_mean)
 
