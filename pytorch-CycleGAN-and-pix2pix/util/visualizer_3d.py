@@ -3,7 +3,7 @@ import os
 import sys
 import ntpath
 import time
-from . import util, html
+from . import util_3d, html
 from subprocess import Popen, PIPE
 
 
@@ -33,7 +33,7 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256):
     ims, txts, links = [], [], []
 
     for label, im_data in visuals.items():
-        im = util.tensor2npy(im_data)
+        im = util_3d.tensor2npy(im_data)
         image_name = '%s_%s.npy' % (name, label)
         save_path = os.path.join(image_dir, image_name)
 
