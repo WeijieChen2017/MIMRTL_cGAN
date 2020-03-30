@@ -23,7 +23,7 @@ date_tag = "Mar30"
 edge_length = 64
 count_cube = np.ones((edge_length, edge_length, edge_length))
 
-list_ori = glob.glob("../data/"+name_dataset+"/test/*.nii")
+list_ori = glob.glob("../data/3dunet_s4e4/test/*.nii")
 list_ori.sort()
 for path_ori in list_ori:
     print(path_ori)
