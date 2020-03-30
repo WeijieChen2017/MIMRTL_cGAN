@@ -6,21 +6,12 @@ import random
 
 
 # create directory
-name_dataset = "3dpet_norm"
+name_dataset = "3dpet_norm_32"
 
 for folder_name in ["trainA", "trainB", "testA", "testB", "train", "test"]:
     path = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/"+folder_name+"/"
     if not os.path.exists(path):
         os.makedirs(path)
-        
-blur_path = "../data/"+name_dataset+"/blur/"
-if not os.path.exists(blur_path):
-    os.makedirs(blur_path)
-    
-pure_path = "../data/"+name_dataset+"/pure/"
-if not os.path.exists(pure_path):
-    os.makedirs(pure_path)
-
 
 # start load and cut
 def maxmin_norm(data):
@@ -40,7 +31,7 @@ def GenerateLegalCoordinates(x,y,z, cube_size):
 
 
 def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
-                          remove_background=False, cube_size=64, step_size=64):
+                          remove_background=False, cube_size=64, step_size=32):
     # shape supposed to be 512*512*284 by default
     path2save = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/test/"
     x, y, z = dataA.shape
@@ -99,7 +90,7 @@ def Testdataset_Generator(dataA, name_dataset, n_slice=3, name_tag="",
             np.save(save_name, output_cube)
             print(idx_x, idx_y, cube_mean)
 
-list_ori = glob.glob("../data/"+name_dataset+"/pure/*.nii")
+list_ori = glob.glob("../data/3dunet/pure/*.nii")
 list_ori.sort()
 for path_ori in list_ori:
     print("Test:")
