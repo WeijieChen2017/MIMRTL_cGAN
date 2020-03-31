@@ -54,7 +54,13 @@ for path_ori in list_ori:
                    start_z+offset:start_z+edge_length-offset] += count_cube                                                                     
     # assert (not 0 in fake_count), ("Each pixel should be generated at least once.")
     
-    pred_fake = np.divide(fake_value, fake_count)
+    # pred_fake = np.divide(fake_value, fake_count)
+    for idx_x in range(nii_data.shape[0]):
+        for idx_y in range(nii_data.shape[1]):
+            for idx_z in range(nii_data.shape[2]):
+                if fake_count[idx_x, idx_y, idx_z] != 0:
+                    fake_value[idx_x, idx_y, idx_z] /= fake_count[idx_x, idx_y, idx_z]
+
     factor_f = np.sum(nii_file.get_data())/np.sum(pred_fake)
     file_fake = nib.Nifti1Image(pred_fake*factor_f, nii_file.affine, nii_file.header)
     nib.save(file_fake, "../"+nii_name+"_fake_value_"+date_tag+".nii")
