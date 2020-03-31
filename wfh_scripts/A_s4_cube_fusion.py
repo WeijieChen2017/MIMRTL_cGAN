@@ -61,6 +61,8 @@ for path_ori in list_ori:
                 if fake_count[idx_x, idx_y, idx_z] != 0:
                     fake_value[idx_x, idx_y, idx_z] /= fake_count[idx_x, idx_y, idx_z]
 
+    pred_fake = fake_value
+
     factor_f = np.sum(nii_file.get_data())/np.sum(pred_fake)
     file_fake = nib.Nifti1Image(pred_fake*factor_f, nii_file.affine, nii_file.header)
     nib.save(file_fake, "../"+nii_name+"_fake_value_"+date_tag+".nii")
