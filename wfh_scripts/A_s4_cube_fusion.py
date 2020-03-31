@@ -19,7 +19,7 @@ def get_cube_idx(path_cube, edge_length):
 
 name_dataset = "3dunet_s4e4"
 test_folder = "test"
-date_tag = "Mar30_32"
+date_tag = "Mar30_32_fusion"
 edge_length = 64
 offset = 16
 count_cube = np.ones((edge_length-2*offset,
@@ -49,9 +49,9 @@ for path_ori in list_ori:
                    start_z+offset:start_z+edge_length-offset] += data_cube[1,offset:-offset,
                                                                              offset:-offset,
                                                                              offset:-offset]
-        fake_value[start_x+offset:start_x+edge_length+offset, 
-                   start_y+offset:start_y+edge_length+offset,
-                   start_z+offset:start_z+edge_length+offset] += count_cube                                                                     
+        fake_value[start_x+offset:start_x+edge_length-offset, 
+                   start_y+offset:start_y+edge_length-offset,
+                   start_z+offset:start_z+edge_length-offset] += count_cube                                                                     
     # assert (not 0 in fake_count), ("Each pixel should be generated at least once.")
     
     pred_fake = np.divide(fake_value, fake_count)
