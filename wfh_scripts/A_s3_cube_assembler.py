@@ -19,7 +19,7 @@ def get_cube_idx(path_cube, edge_length):
 
 name_dataset = "3dunet_s4e4"
 test_folder = "test"
-date_tag = "Mar30_32"
+date_tag = "Mar31_32"
 edge_length = 64
 count_cube = np.ones((edge_length, edge_length, edge_length))
 
