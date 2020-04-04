@@ -14,7 +14,8 @@ class Energy_Conservation_Loss(nn.L1Loss):
         super(nn.L1Loss,self).__init__()
         
     def forward(self,x,y):
-        totloss = torch.sum(torch.abs(y-x))
+        mean_diff = torch.mean(y)-torch.mena(x)
+        totloss = torch.sum(torch.abs(mean_diff))
 
         return totloss
 
