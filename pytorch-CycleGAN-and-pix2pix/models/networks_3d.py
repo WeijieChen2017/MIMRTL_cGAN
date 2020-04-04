@@ -11,7 +11,7 @@ from torch.optim import lr_scheduler
 class Energy_Conservation_Loss(nn.Module):
     
     def __init__(self):
-        super(nn.Module,self).__init__()
+        super(nn.L1Loss,self).__init__()
         
     def forward(self,x,y):
         totloss = torch.sum(torch.abs(y-x))
