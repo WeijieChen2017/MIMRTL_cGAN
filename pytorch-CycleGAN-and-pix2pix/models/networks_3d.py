@@ -8,7 +8,7 @@ from torch.optim import lr_scheduler
 ###############################################################################
 # MIMRTL Functions
 ###############################################################################
-class Energy_Conservation_Loss(nn.Module):
+class Energy_Conservation_Loss(nn.L1Loss):
     
     def __init__(self):
         super(nn.L1Loss,self).__init__()
