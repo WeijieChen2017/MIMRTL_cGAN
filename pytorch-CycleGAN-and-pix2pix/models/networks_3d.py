@@ -6,6 +6,20 @@ from torch.optim import lr_scheduler
 
 
 ###############################################################################
+# MIMRTL Functions
+###############################################################################
+class Energy_Conservation_Loss(nn.Module):
+    
+    def __init__(self):
+        super(nn.Module,self).__init__()
+        
+    def forward(self,x,y):
+        totloss = torch.sum(torch.abs(y-x))
+
+        return totloss
+
+
+###############################################################################
 # Helper Functions
 ###############################################################################
 
