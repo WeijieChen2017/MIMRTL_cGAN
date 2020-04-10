@@ -148,17 +148,17 @@ class BaseModel(ABC):
         """
         for name in self.model_names:
             if isinstance(name, str):
-                print(name)
+                print("Saving the model: ", name)
                 save_filename = '%s_net_%s.pth' % (epoch, name)
                 save_path = os.path.join(self.save_dir, save_filename)
                 net = getattr(self, 'net' + name)
 
                 if len(self.gpu_ids) > 0 and torch.cuda.is_available():
-                    print("1st")
+                    # print("1st")
                     torch.save(net.module.cpu().state_dict(), save_path)
                     net.cuda(self.gpu_ids[0])
                 else:
-                    print("2nd")
+                    # print("2nd")
                     torch.save(net.cpu().state_dict(), save_path)
 
     def __patch_instance_norm_state_dict(self, state_dict, module, keys, i=0):
