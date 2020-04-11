@@ -17,7 +17,7 @@ def get_cube_idx(path_cube, edge_length):
     z = int(path_cube[idx_z+1:idx_z+idx_zz])
     return x,y,z
 
-name_dataset = "3dunet_hybrid"
+name_dataset = "3dunet_hybrid_r10"
 test_folder = "test"
 date_tag = "hybrid"
 edge_length = 64
