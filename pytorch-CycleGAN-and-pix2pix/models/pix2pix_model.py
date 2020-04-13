@@ -34,7 +34,7 @@ class Pix2PixModel(BaseModel):
         if is_train:
             parser.set_defaults(pool_size=0, gan_mode='vanilla')
             parser.add_argument('--lambda_L1', type=float, default=100.0, help='weight for L1 loss')
-            parser.add_argument('--lambda_EC', type=float, default=1.0, help='weight for EC loss')
+            parser.add_argument('--lambda_EC', type=float, default=10.0, help='weight for EC loss')
 
         return parser
 
