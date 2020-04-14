@@ -17,9 +17,9 @@ def get_cube_idx(path_cube, edge_length):
     z = int(path_cube[idx_z+1:idx_z+idx_zz])
     return x,y,z
 
-name_dataset = "hybrid_mae"
+name_dataset = "mae_r10"
 test_folder = "test"
-date_tag = "hybrid_mae"
+date_tag = "mae_r10"
 edge_length = 64
 count_cube = np.ones((edge_length, edge_length, edge_length))
 
