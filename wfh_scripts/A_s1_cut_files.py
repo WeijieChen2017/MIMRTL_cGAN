@@ -29,6 +29,10 @@ def maxmin_norm(data):
     data = (data - MIN)/(MAX-MIN)
     return data
 
+def zscore(data):
+    return (data-np.mean(data))/np.std(data)
+
+
 def GenerateLegalCoordinates(x,y,z, cube_size):
     Bx = random.randint(0, x-cube_size-1)
     Ex = Bx + cube_size
@@ -89,7 +93,7 @@ for path_ori in list_ori:
     filename_ori = os.path.basename(path_ori)[:]
     filename_ori = filename_ori[:filename_ori.find(".")]
     print(filename_ori)
-    data_ori = maxmin_norm(nib.load(path_ori).get_fdata())
+    data_ori = zscore(nib.load(path_ori).get_fdata())
     
     list_sim = glob.glob("../data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
     list_sim.sort()
