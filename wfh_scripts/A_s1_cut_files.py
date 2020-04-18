@@ -88,12 +88,14 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
 
 list_ori = glob.glob("../data/"+name_dataset+"/pure/*.nii")
 list_ori.sort()
+norm = zscore
+
 for path_ori in list_ori:
     print("TrainA:")
     filename_ori = os.path.basename(path_ori)[:]
     filename_ori = filename_ori[:filename_ori.find(".")]
     print(filename_ori)
-    data_ori = zscore(nib.load(path_ori).get_fdata())
+    data_ori = norm(nib.load(path_ori).get_fdata())
     
     list_sim = glob.glob("../data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
     list_sim.sort()
@@ -105,7 +107,7 @@ for path_ori in list_ori:
         print("A:", filename_ori)
         print("B:", filename_sim)
                 
-        data_sim = maxmin_norm(nib.load(path_sim).get_fdata())
+        data_sim = norm(nib.load(path_sim).get_fdata())
         SpotTheDifference_Generator(dataA=data_ori, dataB=data_sim,
                                     name_dataset=name_dataset, name_tag=filename_sim)
         
