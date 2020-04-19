@@ -32,6 +32,12 @@ def maxmin_norm(data):
 def zscore(data):
     return (data-np.mean(data))/np.std(data)
 
+def fix_norm(data):
+    MAX = np.percentile(data, 99.9)
+    MIN = np.amin(data)
+    data = (data - MIN)/(MAX-MIN)
+    return data   
+
 
 def GenerateLegalCoordinates(x,y,z, cube_size):
     Bx = random.randint(0, x-cube_size-1)
@@ -88,7 +94,7 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
 
 list_ori = glob.glob("../data/"+name_dataset+"/pure/*.nii")
 list_ori.sort()
-norm = zscore
+norm = fix_norm
 
 for path_ori in list_ori:
     print("TrainA:")
