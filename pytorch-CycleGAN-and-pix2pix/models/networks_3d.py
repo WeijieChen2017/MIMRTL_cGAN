@@ -17,6 +17,8 @@ class Energy_Conservation_Loss(nn.L1Loss):
         abs_diff = torch.abs(y-x)
         totloss = torch.mean(abs_diff)
 
+        first_loss = torch.mean(x)-torch.mean(y)
+
         return totloss
 
 
@@ -520,7 +522,7 @@ class UnetSkipConnectionBlock(nn.Module):
                                         kernel_size=4, stride=2,
                                         padding=1)
             down = [downconv]
-            up = [uprelu, upconv, nn.Tanh()]
+            up = [uprelu, upconv, nn.Softmax()]
             model = down + [submodule] + up
         elif innermost:
             upconv = nn.ConvTranspose3d(inner_nc, outer_nc,
