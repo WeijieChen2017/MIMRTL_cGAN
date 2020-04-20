@@ -50,7 +50,7 @@ def GenerateLegalCoordinates(x,y,z, cube_size):
 
 
 def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag="",
-								num_sample=1000, remove_background=False, cube_size=64):
+								num_sample=2000, remove_background=False, cube_size=64):
     # shape supposed to be 512*512*284 by default
     assert dataA.shape == dataB.shape, ("DataA should share the same shape with DataB.")
     path2save = "../pytorch-CycleGAN-and-pix2pix/datasets/"+name_dataset+"/train/"
@@ -87,7 +87,8 @@ def SpotTheDifference_Generator(dataA, dataB, name_dataset, n_slice=3, name_tag=
 
 
         save_name = name_tag+"_Bx"+str(Bx)+"_By"+str(By)+"_Bz"+str(Bz)+".npy"
-        np.save(path2save+save_name, output_cube)
+        random_factor = np.random.rand()*0.5-0.25
+        np.save(path2save+save_name, output_cube*random_factor)
         print(idx, path2save+save_name)
 
 
