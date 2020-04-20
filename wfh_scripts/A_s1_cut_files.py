@@ -36,7 +36,7 @@ def fix_norm(data):
     MAX = np.percentile(data, 99.9)
     MIN = np.amin(data)
     data = (data - MIN)/(MAX-MIN)
-    return data   
+    return MAX, MIN, data 
 
 
 def GenerateLegalCoordinates(x,y,z, cube_size):
@@ -102,7 +102,7 @@ for path_ori in list_ori:
     filename_ori = os.path.basename(path_ori)[:]
     filename_ori = filename_ori[:filename_ori.find(".")]
     print(filename_ori)
-    data_ori = norm(nib.load(path_ori).get_fdata())
+    MAX, MIN, data_ori = norm(nib.load(path_ori).get_fdata())
     
     list_sim = glob.glob("../data/"+name_dataset+"/blur/*"+filename_ori+"*.nii")
     list_sim.sort()
@@ -114,7 +114,9 @@ for path_ori in list_ori:
         print("A:", filename_ori)
         print("B:", filename_sim)
                 
-        data_sim = norm(nib.load(path_sim).get_fdata())
+        # data_sim = norm(nib.load(path_sim).get_fdata())
+        data_sim = nib.load(path_sim).get_fdata()
+        data_sim = (data_sim - MIN)/(MAX-MIN)
         SpotTheDifference_Generator(dataA=data_ori, dataB=data_sim,
                                     name_dataset=name_dataset, name_tag=filename_sim)
         
