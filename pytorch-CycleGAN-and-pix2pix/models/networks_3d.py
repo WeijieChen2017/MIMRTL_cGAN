@@ -522,7 +522,7 @@ class UnetSkipConnectionBlock(nn.Module):
                                         kernel_size=4, stride=2,
                                         padding=1)
             down = [downconv]
-            final_layer = nn.Linear(157286400,157286400)
+            final_layer = nn.Linear(64,64)
             up = [uprelu, upconv, final_layer]
             model = down + [submodule] + up
         elif innermost:
