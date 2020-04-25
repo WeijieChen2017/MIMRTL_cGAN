@@ -17,7 +17,7 @@ def get_cube_idx(path_cube, edge_length):
     z = int(path_cube[idx_z+1:idx_z+idx_zz])
     return x,y,z
 
-name_dataset = "ln2_r10e60"
+name_dataset = "ln3_r10e60"
 test_folder = "test"
 date_tag = name_dataset
 edge_length = 64
