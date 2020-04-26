@@ -524,7 +524,7 @@ class UnetSkipConnectionBlock(nn.Module):
             down = [downconv]
             final_layer = nn.Conv3d(outer_nc, outer_nc, kernel_size=1,
                                     stride=1, padding=0, bias=use_bias)
-            up = [uprelu, upconv, nn.Softmax(), final_layer]
+            up = [uprelu, upconv, final_layer, nn.Softmax()]
             model = down + [submodule] + up
         elif innermost:
             upconv = nn.ConvTranspose3d(inner_nc, outer_nc,
